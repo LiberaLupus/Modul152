@@ -2,15 +2,19 @@ create database Video;
 
 use video;
 
-create table MedienTypen (
+create table User (
 	Id int not null auto_increment,
-    Typ char(35),
-    primary key(Id)
+    Username char(25),
+    Password char(25),
+    Icon char(125),
+    Beschreibung text,
+    primary key(Id));
+
+create table Genres (
+	Id int not null auto_increment,
+    Genre varchar(125),
+    primary key (Id)
 );
-
-create table User ();
-
-
 
 create table Medien (
 	Id int not null auto_increment,
@@ -18,4 +22,13 @@ create table Medien (
     UserFk int not null,
     primary key(Id),
     foreign key(UserFk) references User(Id)
+);
+
+create table MedienGenres (
+	Id int not null auto_increment,
+    MedienFk int not null,
+	GenresFk int not null,
+    primary key(Id),
+    foreign key(MedienFk) references Medien(Id),
+    foreign key(GenresFk) references Genres(Id)
 );
