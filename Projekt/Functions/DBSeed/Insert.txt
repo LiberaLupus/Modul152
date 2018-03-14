@@ -1,0 +1,1 @@
+insert into user(Username, Password, Icon, Beschreibung) values ("root", "root", "root.png", "Root");

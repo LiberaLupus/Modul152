@@ -32,3 +32,7 @@ create table MedienGenres (
     foreign key(MedienFk) references Medien(Id),
     foreign key(GenresFk) references Genres(Id)
 );
+
+insert into user(Username, Password, Icon, Beschreibung) values ("root", "root", "root.png", "Root");
+
+select * from user;
