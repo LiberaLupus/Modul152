@@ -1,191 +1,181 @@
 <?php
-  class DBConnection{
+/**
+ * Created by PhpStorm.
+ * User: Kurt
+ * Date: 14.03.2018
+ * Time: 09:33
+ */
+
+class DBConnection{
+
     public $servername = "localhost";
     public $username = "root";
     public $password = "gibbiX12345";
-    public $dbname = "webshop";
-    public $Artikel = array();
+    public $dbname = "video";
 
-    public function SelectWaren($kategorie, $attribut, $id){
-      // Create connection
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      // Check connection
-      if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-      }
-      // Create database
-      $sql = 'select '."$attribut".' from artikel as a inner join kategorie as k on k.Id = a.KategorieFK where Kategorie = "'.$kategorie.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        // output data of each row
-        $i = 0;
-        while($row = $result->fetch_assoc()) {
-          ++$i;
-          if($id == $i){
-            return $row[$attribut];
-          }
-        }
-      } else {
-        return "";
-      }
-      $conn->close();
-      return "";
-    }
+    private $SQLStatement = array();
+    private $WhereList = array();
+    private $JoinTabelleList = array();
+    private $JoinTabelleTypeList = array();
+    private $UseJoin = false;
+    private $UseWhere = false;
 
-    public function LoginUser($User, $Pass){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select * from user where Username = "'.$User.'" and Password = "'.$Pass.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            return $row["Username"];
-          }
-        } else {
-        return "";
-      }
-      $conn->close();
-    }
 
-    public function Wunschliste($attribut, $User, $id){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select '."$attribut".' from artikel as a inner join wunschliste as w on a.Id = w.ArtikelFk inner join user as u on w.UserFk = u.Id where Username = "'.$User.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        // output data of each row
-        $i = 0;
-        while($row = $result->fetch_assoc()) {
-          ++$i;
-          if($id == $i){
-            return $row[$attribut];
-          }
-        }
-      } else {
-        return "";
-      }
-      $conn->close();
-      return "";
-    }
-
-    public function Namenvergleich($attribut, $User, $ArtikelName){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select '."$attribut".' from artikel as a inner join wunschliste as w on a.Id = w.ArtikelFk inner join user as u on w.UserFk = u.Id where a.ArtikelName = "'.$ArtikelName.'" and u.Username = "'.$User.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            return $row[$attribut];
-          }
-        } else {
-        return "";
-      }
-      $conn->close();
-    }
-
-    public function DBAdd($User, $ArtikelName){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select Id from User where Username = "'.$User.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $Wert1 = $row["Id"];
-          }
-        } else {
-        return "";
-      }
-      $sql = 'select Id from Artikel where ArtikelName = "'.$ArtikelName.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $Wert2 = $row["Id"];
-          }
-        } else {
-        return "";
-      }
-      $sql = 'insert into wunschliste(UserFk, ArtikelFk) values ('.$Wert1.','.$Wert2.');';
-      $conn->query($sql);
-      $conn->close();
-    }
-
-    public function DBRemove($User, $ArtikelName){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select Id from User where Username = "'.$User.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $Wert1 = $row["Id"];
-          }
-        } else {
-        return "";
-      }
-      $sql = 'select Id from Artikel where ArtikelName = "'.$ArtikelName.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $Wert2 = $row["Id"];
-          }
-        } else {
-        return "";
-      }
-      $sql = 'delete from wunschliste where UserFk = '.$Wert1.' and ArtikelFk = '.$Wert2.';';
-      $conn->query($sql);
-      $conn->close();
-    }
-
-    public function Reg($user, $pass, $anrede, $nachname, $vorname, $email, $plz, $strasse, $strasseNr, $ort){
+    public function SelectItem($Item, $Attribut){
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $sql = 'insert into kontakt(Anrede, Nachname,Vorname,Email,PLZ,Strasse,StrasseNr,Ort) values ("'.$anrede.'","'.$nachname.'","'.$vorname.'","'.$email.'",'.$plz.',"'.$strasse.'","'.$strasseNr.'","'.$ort.'");';
-        $conn->query($sql);
-        $sql = 'select Id from kontakt where Nachname = "'.$nachname.'" and Vorname = "'.$vorname.'";';
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = 'select '."$Attribut".' from items where name = "'.$Item.'";';
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
-          while($row = $result->fetch_assoc()) {
-              $Wert1 = $row["Id"];
+            while($row = $result->fetch_assoc()) {
+                return $row[$Attribut];
             }
-          } else {
-          return "";
+        } else {
+            return "";
         }
-        $FK = 2;
-        $sql = 'insert into user(Username, Password, RolleFk, KontaktFk) values ("'.$user.'","'.$pass.'",'.$FK.','.$Wert1.');';
-        $conn->query($sql);
         $conn->close();
-    }
-
-    public function UsernameTest($user){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select Username from user where Username = "'.$user.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            return $row["Username"];
-          }
-        } else {
         return "";
-      }
-      $conn->close();
     }
 
-    public function getProfileData($user, $attribut){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'select '.$attribut.' from user as u inner join kontakt as k on u.KontaktFk = k.Id where Username = "'.$user.'";';
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            return $row[$attribut];
-          }
+    public function __construct()
+    {
+        $this->SQLStatement = array();
+        $this->WhereList = array();
+        $this->JoinTabelleList = array();
+        $this->JoinTabelleTypeList = array();
+
+    }
+
+//-----------------------------------------------------------//
+
+    public function Mode($Mode){
+        if($Mode == "select"|$Mode == "Select"){
+            $this->SQLStatement["Mode"] = "select ";
+            return $this;
+        }elseif ($Mode == "insert"|$Mode == "Insert"){
+            $this->SQLStatement["Mode"] = "insert ";
+            return $this;
+        }elseif ($Mode == "delete"|$Mode == "Delete"){
+            $this->SQLStatement["Mode"] = "delete ";
+            return $this;
+        }elseif ($Mode == "update"|$Mode == "Update"){
+            $this->SQLStatement["Mode"] = "update ";
+            return $this;
+        }else{
+            return null;
+        }
+    }
+
+    public function Attribut($Attribut){
+        $this->SQLStatement["Attribut"] = $Attribut;
+        return $this;
+    }
+
+    public function fromTabelle($fromTabelle){
+        $this->SQLStatement["fromTabelle"] = " from ".$fromTabelle;
+        return $this;
+    }
+
+//-------------------------Join------------------------------//
+
+    public function Join($Join){
+        if ($this->UseJoin == false){
+            $this->UseJoin = true;
+        }
+        if($Join == "inner"| $Join == "Inner"){
+            $this->JoinTabelleTypeList["Join"] = "inner";
+            return $this;
+        }elseif ($Join == "left"| $Join == "Left"){
+            $this->JoinTabelleTypeList["Join"] = "left";
+            return $this;
+        }elseif ($Join == "right"| $Join == "Right"){
+            $this->JoinTabelleTypeList["Join"] = "right";
+            return $this;
+        }elseif ($Join == "full"| $Join == "Full"){
+            $this->JoinTabelleTypeList["Join"] = "full";
+            return $this;
+        }else{
+            return null;
+        }
+    }
+
+    public function JoinTabelle($JoinTabelle){
+        static $i;
+        ++$i;
+        $this->JoinTabelleList[$i] = $JoinTabelle;
+        return $this;
+    }
+
+    public function JoinStatement(){
+        if ($this->UseJoin == true){
+            $Statement = " ". implode ( ", " , $this->JoinTabelleTypeList." ".$this->JoinTabelleList);
+            return $Statement;
+        }else{
+            return " ";
+        }
+
+    }
+
+//-------------------------Where-----------------------------//
+
+    public function Where($Where){
+        if ($this->UseWhere == false){
+            $this->UseWhere = true;
+        }
+        static $i;
+        ++$i;
+        $this->WhereList[$i] = '"'.$Where.'"';
+        return $this;
+    }
+
+    public function WhereCeck(){
+        if ($this->UseWhere == true){
+            return " where ";
+        }else{
+            return " ";
+        }
+    }
+
+    public function WhereStatement(){
+        if ($this->UseWhere == true) {
+            $Statement = $this->WhereCeck() . " " . implode(" and ", $this->WhereList);
+            return $Statement;
+        }else{
+            return " ";
+        }
+    }
+
+//------------------------SQLExe-----------------------------//
+
+    public function SQLExe(){
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        static $sql;
+        if($this->SQLStatement["Mode"] == "select "){
+            $sql = $this->SQLStatement["Mode"]
+                .$this->SQLStatement["Attribut"]
+                .$this->SQLStatement["fromTabelle"]
+                .$this->JoinStatement()
+                .$this->WhereStatement()
+                .";";
+        }
+
+        echo $sql;
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo $row[$this->SQLStatement["Attribut"]];
+                return $row[$this->SQLStatement["Attribut"]];
+            }
         } else {
+            return "";
+        }
+        $conn->close();
         return "";
-      }
-      $conn->close();
-    }
-
-    public function setProfileData($attribut1, $attribut2, $tabelle, $wert1, $wert2 ){
-      $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-      $sql = 'update '.$tabelle.' set '.$attribut1.' = "'.$wert1.'" where '.$attribut2.' = "'.$wert2.'";';
-      $conn->query($sql);
-
-      $conn->close();
     }
 
 }
-
-
-?>

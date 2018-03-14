@@ -24,20 +24,21 @@
       <file leaf-file-name="DBConnection.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Functions/DBConnection.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="140" column="37" lean-forward="false" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
               <folding>
-                <marker date="1511497387134" expanded="true" signature="1187:1261" ph="select * fro... user" />
-                <marker date="1511497387134" expanded="true" signature="2963:3011" ph="select Id fr... User" />
-                <marker date="1511497387134" expanded="true" signature="3236:3297" ph="select Id fr... Artikel" />
-                <marker date="1511497387134" expanded="true" signature="3522:3595" ph="insert into wunschliste... " />
-                <marker date="1511497387134" expanded="true" signature="3813:3861" ph="select Id fr... User" />
-                <marker date="1511497387134" expanded="true" signature="4086:4147" ph="select Id fr... Artikel" />
-                <marker date="1511497387134" expanded="true" signature="4372:4438" ph="delete from " />
-                <marker date="1511497387134" expanded="true" signature="4730:4926" ph="insert into kontakt... " />
-                <marker date="1511497387134" expanded="true" signature="4974:5058" ph="select Id fr... kontakt" />
-                <marker date="1511497387134" expanded="true" signature="5318:5426" ph="insert into user... " />
-                <marker date="1511497387134" expanded="true" signature="5638:5692" ph="select Usern... user" />
+                <element signature="e#6#86#0#PHP" expanded="true" />
+                <element signature="n#SelectItem#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#__construct#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#Mode#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#Attribut#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#fromTabelle#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#Join#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#JoinTabelle#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#JoinStatement#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#Where#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#WhereCeck#0;n#DBConnection#0;n#!!top" expanded="false" />
+                <element signature="n#WhereStatement#0;n#DBConnection#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -45,10 +46,16 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>WhereList</find>
+    </findStrings>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Index.php" />
+        <option value="$PROJECT_DIR$/Functions/DBConnection.php" />
       </list>
     </option>
   </component>
@@ -89,11 +96,6 @@
               <item name="Projekt" type="b2602c69:ProjectViewProjectNode" />
               <item name="Projekt" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="Projekt" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projekt" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Functions" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -106,6 +108,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Kurt\Documents\GitHub\Modul152\Projekt\Functions" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Kurt\Documents\GitHub\Modul152\Projekt\Functions" />
       <recent name="C:\Users\Kurt\Desktop\FabianKurtModul152" />
@@ -138,12 +143,12 @@
       <workItem from="1520936618812" duration="1143000" />
       <workItem from="1520964759769" duration="1422000" />
       <workItem from="1521013487503" duration="607000" />
-      <workItem from="1521015517666" duration="39000" />
+      <workItem from="1521015517666" duration="5592000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4070000" />
+    <option name="totallyTimeSpent" value="9623000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
@@ -176,7 +181,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="7" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -230,20 +237,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Functions/DBConnection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="140" column="37" lean-forward="false" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
           <folding>
-            <marker date="1511497387134" expanded="true" signature="1187:1261" ph="select * fro... user" />
-            <marker date="1511497387134" expanded="true" signature="2963:3011" ph="select Id fr... User" />
-            <marker date="1511497387134" expanded="true" signature="3236:3297" ph="select Id fr... Artikel" />
-            <marker date="1511497387134" expanded="true" signature="3522:3595" ph="insert into wunschliste... " />
-            <marker date="1511497387134" expanded="true" signature="3813:3861" ph="select Id fr... User" />
-            <marker date="1511497387134" expanded="true" signature="4086:4147" ph="select Id fr... Artikel" />
-            <marker date="1511497387134" expanded="true" signature="4372:4438" ph="delete from " />
-            <marker date="1511497387134" expanded="true" signature="4730:4926" ph="insert into kontakt... " />
-            <marker date="1511497387134" expanded="true" signature="4974:5058" ph="select Id fr... kontakt" />
-            <marker date="1511497387134" expanded="true" signature="5318:5426" ph="insert into user... " />
-            <marker date="1511497387134" expanded="true" signature="5638:5692" ph="select Usern... user" />
+            <element signature="e#6#86#0#PHP" expanded="true" />
+            <element signature="n#SelectItem#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#__construct#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#Mode#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#Attribut#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#fromTabelle#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#Join#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#JoinTabelle#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#JoinStatement#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#Where#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#WhereCeck#0;n#DBConnection#0;n#!!top" expanded="false" />
+            <element signature="n#WhereStatement#0;n#DBConnection#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
