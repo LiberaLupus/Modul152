@@ -15,12 +15,17 @@ class DBConnection{
 
     private $SQLStatement = array();
     private $WhereList = array();
+    private $InsertAttributList = array();
+    private $InsertValuesList = array();
+    private $UpdateList = array();
     private $JoinTabelleList = array();
     private $JoinTabelleTypeList = array();
+
     private $UseJoin = false;
     private $UseWhere = false;
 
-
+//-----------------------------------------------------------//
+//
     public function SelectItem($Item, $Attribut){
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         if ($conn->connect_error) {
@@ -43,6 +48,9 @@ class DBConnection{
     {
         $this->SQLStatement = array();
         $this->WhereList = array();
+        $this->InsertAttributList = array();
+        $this->InsertValuesList = array();
+        $this->UpdateList = array();
         $this->JoinTabelleList = array();
         $this->JoinTabelleTypeList = array();
 
@@ -55,7 +63,7 @@ class DBConnection{
             $this->SQLStatement["Mode"] = "select ";
             return $this;
         }elseif ($Mode == "insert"|$Mode == "Insert"){
-            $this->SQLStatement["Mode"] = "insert ";
+            $this->SQLStatement["Mode"] = "insert into ";
             return $this;
         }elseif ($Mode == "delete"|$Mode == "Delete"){
             $this->SQLStatement["Mode"] = "delete ";
@@ -74,8 +82,43 @@ class DBConnection{
     }
 
     public function fromTabelle($fromTabelle){
-        $this->SQLStatement["fromTabelle"] = " from ".$fromTabelle;
+        $this->SQLStatement["fromTabelle"] = $fromTabelle;
         return $this;
+    }
+
+//-----------------------Update------------------------------//
+
+    public function Update($UpdateValue){
+        static $i;
+        ++$i;
+        $this->UpdateList[$i] = $UpdateValue;
+        return $this;
+    }
+
+    public function UpdateStatement(){
+        $Statement = " " . implode(" , ", $this->UpdateList)." ";
+        return $Statement;
+    }
+
+//-----------------------Insert------------------------------//
+
+    public function InsertAttribut($InsertAttribut){
+        static $i;
+        ++$i;
+        $this->InsertAttributList[$i] = $InsertAttribut;
+        return $this;
+    }
+
+    public function InsertValues($InsertValue){
+        static $i;
+        ++$i;
+        $this->InsertValuesList[$i] = $InsertValue;
+        return $this;
+    }
+
+    public function InsertStatement($List){
+        $Statement = "(" . implode(" , ", $List).")";
+        return $Statement;
     }
 
 //-------------------------Join------------------------------//
@@ -158,8 +201,34 @@ class DBConnection{
         if($this->SQLStatement["Mode"] == "select "){
             $sql = $this->SQLStatement["Mode"]
                 .$this->SQLStatement["Attribut"]
+                ." from "
                 .$this->SQLStatement["fromTabelle"]
                 .$this->JoinStatement()
+                .$this->WhereStatement()
+                .";";
+
+        }
+        elseif ($this->SQLStatement["Mode"] == "insert into "){
+            $sql = $this->SQLStatement["Mode"]
+                .$this->SQLStatement["fromTabelle"]
+                .$this->InsertStatement($this->InsertAttributList)
+                ." values "
+                .$this->InsertStatement($this->InsertValuesList)
+                .";";
+
+        }
+        elseif ($this->SQLStatement["Mode"] == "delete "){
+            $sql = $this->SQLStatement["Mode"]
+                ." from "
+                .$this->SQLStatement["fromTabelle"]
+                .$this->WhereStatement()
+                .";";
+        }
+        elseif ($this->SQLStatement["Mode"] == "update "){
+            $sql = $this->SQLStatement["Mode"]
+                .$this->SQLStatement["fromTabelle"]
+                ." set "
+                .$this->UpdateStatement()
                 .$this->WhereStatement()
                 .";";
         }
