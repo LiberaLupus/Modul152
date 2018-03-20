@@ -169,7 +169,7 @@ class DBConnection{
         }
         static $i;
         ++$i;
-        $this->WhereList[$i] = '"'.$Where.'"';
+        $this->WhereList[$i] = $Where;
         return $this;
     }
 
@@ -232,12 +232,9 @@ class DBConnection{
                 .$this->WhereStatement()
                 .";";
         }
-
-        echo $sql;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                echo $row[$this->SQLStatement["Attribut"]];
                 return $row[$this->SQLStatement["Attribut"]];
             }
         } else {

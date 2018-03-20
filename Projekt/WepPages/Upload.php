@@ -8,13 +8,15 @@
 ?>
 <!DOCTYPE html>
 <html>
-<body>
+    <body>
 
-<form action="../Functions/upload.php" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+        <form action="../Functions/upload.php" method="post" enctype="multipart/form-data">
+            <input type="text" name="titel" placeholder="Titel" class="form-control" required autofocus/>
+            <input type="text" name="beschreibung" placeholder="Beschreibung" class="form-control" required/>
+            Select Video to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="submit" value="Upload Video" name="submit">
+        </form>
 
-</body>
+    </body>
 </html>
