@@ -18,10 +18,7 @@ class DBConnection{
     private $InsertAttributList = array();
     private $InsertValuesList = array();
     private $UpdateList = array();
-    private $JoinTabelleList = array();
-    private $JoinTabelleTypeList = array();
 
-    private $UseJoin = false;
     private $UseWhere = false;
 
 //-----------------------------------------------------------//
@@ -51,8 +48,6 @@ class DBConnection{
         $this->InsertAttributList = array();
         $this->InsertValuesList = array();
         $this->UpdateList = array();
-        $this->JoinTabelleList = array();
-        $this->JoinTabelleTypeList = array();
 
     }
 
@@ -83,6 +78,11 @@ class DBConnection{
 
     public function fromTabelle($fromTabelle){
         $this->SQLStatement["fromTabelle"] = $fromTabelle;
+        return $this;
+    }
+
+    public function Join($Join){
+        $this->SQLStatement["Join"] = $Join;
         return $this;
     }
 
@@ -121,46 +121,6 @@ class DBConnection{
         return $Statement;
     }
 
-//-------------------------Join------------------------------//
-
-    public function Join($Join){
-        if ($this->UseJoin == false){
-            $this->UseJoin = true;
-        }
-        if($Join == "inner"| $Join == "Inner"){
-            $this->JoinTabelleTypeList["Join"] = "inner";
-            return $this;
-        }elseif ($Join == "left"| $Join == "Left"){
-            $this->JoinTabelleTypeList["Join"] = "left";
-            return $this;
-        }elseif ($Join == "right"| $Join == "Right"){
-            $this->JoinTabelleTypeList["Join"] = "right";
-            return $this;
-        }elseif ($Join == "full"| $Join == "Full"){
-            $this->JoinTabelleTypeList["Join"] = "full";
-            return $this;
-        }else{
-            return null;
-        }
-    }
-
-    public function JoinTabelle($JoinTabelle){
-        static $i;
-        ++$i;
-        $this->JoinTabelleList[$i] = $JoinTabelle;
-        return $this;
-    }
-
-    public function JoinStatement(){
-        if ($this->UseJoin == true){
-            $Statement = " ". implode ( ", " , $this->JoinTabelleTypeList." ".$this->JoinTabelleList);
-            return $Statement;
-        }else{
-            return " ";
-        }
-
-    }
-
 //-------------------------Where-----------------------------//
 
     public function Where($Where){
@@ -190,6 +150,12 @@ class DBConnection{
         }
     }
 
+//-------------------------Count-----------------------------//
+
+    public function AttributCount(){
+
+    }
+
 //------------------------SQLExe-----------------------------//
 
     public function SQLExe(){
@@ -203,7 +169,7 @@ class DBConnection{
                 .$this->SQLStatement["Attribut"]
                 ." from "
                 .$this->SQLStatement["fromTabelle"]
-                .$this->JoinStatement()
+                .$this->SQLStatement["Join"]
                 .$this->WhereStatement()
                 .";";
 
