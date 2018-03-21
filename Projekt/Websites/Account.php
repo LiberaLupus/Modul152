@@ -28,7 +28,9 @@
                 <img src="../Images/profilicon.gif" class="img img-responsive center-block"/>
        </div><!-- /.logo -->
   		 <div class="controls">
-         <?php  include __DIR__.'/../Coode/AccountCRUD.php'; ?>
+         <?php
+            include __DIR__.'/../Coode/AccountCRUD.php';
+         ?>
   		</div><!-- /.controls -->
   	</div><!-- /#login-box -->
   </div><!-- /.container -->
@@ -36,6 +38,9 @@
     include_once ("../Functions/AnimationLogin.php");
     $Navigon = new AnimationLogin();
     $Navigon->Animation();
+
+
+
   ?>
   </body>
 </html>

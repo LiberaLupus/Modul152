@@ -1,3 +1,3 @@
 create table User (Id int not null auto_increment,Username char(25),Password char(25),primary key(Id));
-create table Medien (Id int not null auto_increment,Name char(225), Video char(225),Beschreibung Text,UserFk int not null,primary key(Id),foreign key(UserFk) references User(Id));
+create table Medien (Id int not null auto_increment,Name char(225), Video char(225),Beschreibung Text,UserFk int not null,primary key(Id),foreign key(UserFk) references User(Id) ON DELETE CASCADE);
 create table Favoriten (Id int not null auto_increment, UserFk int not null, MedienFk int not null, primary key(Id) ,foreign key(UserFk) references User(Id), foreign key(MedienFk) references Medien(Id));
