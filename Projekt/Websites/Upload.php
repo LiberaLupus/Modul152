@@ -40,7 +40,7 @@ session_start();
                         <input type="text" name="titel" placeholder="Titel" class="form-control" required autofocus/>
                         <input type="text" name="beschreibung" placeholder="Beschreibung" class="form-control" required/>
                         <h3 class="logo-caption">Select Video to upload:</h3>
-                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="file" name="fileToUpload" id="fileToUpload" required>
                         <br />
                         <input type="submit" value="Upload Video" name="submit">
                     </form>

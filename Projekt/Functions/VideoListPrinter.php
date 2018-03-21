@@ -9,7 +9,7 @@
 
 $Id = 1;
 //error_reporting(0);
-
+$PX = 100;
 while (true){
     if($Favoriten == false){
         $Name = $DBhelper->Mode("select")->Attribut("Name")->fromTabelle("Medien")->Where("Id = ".$Id)->SQLExe();
@@ -24,14 +24,16 @@ while (true){
     if($Name != null){
         echo '<div id="login-box" style="
                     border-top-width: 1px;
-                    margin-top: 100px;
+                    margin-top: '.$PX.'px;
+
                 ">
-                    <div class="container">
-  	                <div id="login-box">
-  	                    <div class="logo">';
+        <div class="container">
+            <div id="login-box">
+                <div class="logo">';
         echo '<div class="controls">
                 <form method="post" action="'.$Seite.'" enctype="multipart/form-data">';
-        echo '<h2 class="logo-caption">'.$Name.'</h2>';
+        echo '<h2 class="logo-caption">'.$Name.'</h2>
+                </div><!-- /.logo -->';
         echo '<br />';
         echo '<video width="320" height="240" controls>
               <source src="../Uploads/'.$VideoName .'" type="video/mp4">
@@ -58,9 +60,8 @@ while (true){
         echo '<br />';
         echo '</form>';
         echo '            </div><!-- /.controls -->
-                        </div><!-- /.logo -->
-                    </div><!-- /#login-box -->
-                </div><!-- /.container -->';
+                     </div><!-- /#login-box -->
+        </div><!-- /.container -->';
      if (isset($_POST["Add"])){
          $DBhelper->Mode("insert")
              ->fromTabelle("Favoriten")
@@ -91,4 +92,8 @@ while (true){
         break;
     }
     ++$Id;
+    if($XP < 100){
+        $PX = 550;
+    }
+
 }
