@@ -5,8 +5,6 @@
  * Date: 20.03.2018
  * Time: 19:20
  */
-
-
 $Id = 1;
 //error_reporting(0);
 $PX = 100;
@@ -20,12 +18,10 @@ while (true){
         $VideoName = $DBhelper->Mode("select")->Attribut("Video")->fromTabelle("Medien")->Join(" inner join Favoriten on Medien.Id = Favoriten.MedienFk ")->Where("Favoriten.UserFk =".$_SESSION["UserId"])->Where("Medien.Id =".$Id)->SQLExe();;
         $Beschreibung = $DBhelper->Mode("select")->Attribut("Beschreibung")->fromTabelle("Medien")->Join(" inner join Favoriten on Medien.Id = Favoriten.MedienFk ")->Where("Favoriten.UserFk =".$_SESSION["UserId"])->Where("Medien.Id =".$Id)->SQLExe();;
     }
-
     if($Name != null){
         echo '<div id="login-box" style="
                     border-top-width: 1px;
                     margin-top: '.$PX.'px;
-
                 ">
         <div class="container">
             <div id="login-box">
@@ -50,7 +46,6 @@ while (true){
         if($_SESSION["UserId"] > 0){
             if ($Id != $TestId){
                 echo'<input type="submit" value=" Zu Favoriten hinzufügen" name = "Add">';
-
             }else{
                 echo'<input type="submit" value="Von Favoriten entfernen" name = "Remove">';
             }
@@ -62,32 +57,32 @@ while (true){
         echo '            </div><!-- /.controls -->
                      </div><!-- /#login-box -->
         </div><!-- /.container -->';
-     if (isset($_POST["Add"])){
-         $DBhelper->Mode("insert")
-             ->fromTabelle("Favoriten")
-             ->InsertAttribut("UserFk")
-             ->InsertAttribut("MedienFk")
-             ->InsertValues($_SESSION["UserId"])
-             ->InsertValues($Id)
-             ->SqlExe();
-         if($Favoriten == false){
-             header('Location: http://localhost:63342/Projekt/Websites/Index.php'); exit;
+        if (isset($_POST["Add"])){
+            $DBhelper->Mode("insert")
+                ->fromTabelle("Favoriten")
+                ->InsertAttribut("UserFk")
+                ->InsertAttribut("MedienFk")
+                ->InsertValues($_SESSION["UserId"])
+                ->InsertValues($Id)
+                ->SqlExe();
+            if($Favoriten == false){
+                header('Location: http://localhost:63342/Projekt/Websites/Index.php'); exit;
             }else{
-             header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
-         }
-     }
-     if (isset($_POST["Remove"])){
-        $DBhelper->Mode("delete")
-            ->fromTabelle("Favoriten")
-            ->Where("UserFk =".$_SESSION["UserId"])
-            ->Where("MedienFk =".$Id)
-            ->SqlExe();
-         if($Favoriten == false){
-             header('Location: http://localhost:63342/Projekt/Websites/Index.php'); exit;
-         }else{
-             header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
-         }
-     }
+                header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
+            }
+        }
+        if (isset($_POST["Remove"])){
+            $DBhelper->Mode("delete")
+                ->fromTabelle("Favoriten")
+                ->Where("UserFk =".$_SESSION["UserId"])
+                ->Where("MedienFk =".$Id)
+                ->SqlExe();
+            if($Favoriten == false){
+                header('Location: http://localhost:63342/Projekt/Websites/Index.php'); exit;
+            }else{
+                header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
+            }
+        }
     }else{
         break;
     }
@@ -95,5 +90,4 @@ while (true){
     if($XP < 100){
         $PX = 550;
     }
-
 }
