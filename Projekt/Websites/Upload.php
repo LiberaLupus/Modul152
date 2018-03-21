@@ -12,6 +12,7 @@ session_start();
 <head>
     <title>Modul-152</title>
     <link rel="stylesheet" href="../CSS/styles_login.css" type="text/css">
+    <link rel="stylesheet" href="../CSS/styles.css" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -22,13 +23,30 @@ session_start();
         include_once ("../Coode/Navbar.php");
         error_reporting(0);
         ?>
-        <form action="../Functions/upload.php" method="post" enctype="multipart/form-data">
-            <input type="text" name="titel" placeholder="Titel" class="form-control" required autofocus/>
-            <input type="text" name="beschreibung" placeholder="Beschreibung" class="form-control" required/>
-            Select Video to upload:
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" value="Upload Video" name="submit">
-        </form>
+        <div id="login-box" style="
+                    border-top-width: 1px;
+                    margin-top: 100px;
+                    color: white;
+                ">
+        <div class="container">
+            <div id="login-box">
+                <div class="logo">
+                    <h1 class="logo-caption">Upload</h1>
+                    <br />
+                    <img src="../Images/Camera.gif" class="img img-responsive center-block"/>
+                </div><!-- /.logo -->
+                <div class="controls">
+                    <form action="../Functions/upload.php" method="post" enctype="multipart/form-data">
+                        <input type="text" name="titel" placeholder="Titel" class="form-control" required autofocus/>
+                        <input type="text" name="beschreibung" placeholder="Beschreibung" class="form-control" required/>
+                        <h3 class="logo-caption">Select Video to upload:</h3>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <br />
+                        <input type="submit" value="Upload Video" name="submit">
+                    </form>
+                </div><!-- /.controls -->
+            </div><!-- /#login-box -->
+        </div><!-- /.container -->
 
     </body>
 </html>

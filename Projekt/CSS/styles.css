@@ -1,0 +1,4 @@
+body{
+    background: url("../Images/Background.gif") no-repeat fixed 0 0 / cover;
+    background-position: center center;
+}

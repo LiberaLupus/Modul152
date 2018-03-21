@@ -19,7 +19,7 @@
   		    <div class="logo">
       		<h1 class="logo-caption">Login</h1>
                 <br />
-          <img src="../Images/Camera.gif" class="img img-responsive center-block"/>
+          <img src="../Images/icon.gif" class="img img-responsive center-block"/>
        </div><!-- /.logo -->
   		 <div class="controls">
          <?php  include __DIR__.'/../Coode/Log.php'; ?>

@@ -22,9 +22,16 @@ while (true){
     }
 
     if($Name != null){
-        echo '<form method="post" action="'.$Seite.'" enctype="multipart/form-data">';
-        echo '---------------------------------------------------------------------';
-        echo '<h2>'.$Name.'</h2>';
+        echo '<div id="login-box" style="
+                    border-top-width: 1px;
+                    margin-top: 100px;
+                ">
+                    <div class="container">
+  	                <div id="login-box">
+  	                    <div class="logo">';
+        echo '<div class="controls">
+                <form method="post" action="'.$Seite.'" enctype="multipart/form-data">';
+        echo '<h2 class="logo-caption">'.$Name.'</h2>';
         echo '<br />';
         echo '<video width="320" height="240" controls>
               <source src="../Uploads/'.$VideoName .'" type="video/mp4">
@@ -47,10 +54,13 @@ while (true){
             }
         }
         echo '<br />';
-        echo $Beschreibung;
+        echo '<h4 class="logo-caption">'.$Beschreibung.'</h4>';
         echo '<br />';
-        echo '---------------------------------------------------------------------';
         echo '</form>';
+        echo '            </div><!-- /.controls -->
+                        </div><!-- /.logo -->
+                    </div><!-- /#login-box -->
+                </div><!-- /.container -->';
      if (isset($_POST["Add"])){
          $DBhelper->Mode("insert")
              ->fromTabelle("Favoriten")
