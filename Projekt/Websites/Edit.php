@@ -8,7 +8,6 @@
 session_start();
 include_once ("../Functions/DBConnection.php");
 $DBhelper = new DBConnection();
-$_SESSION["VideoId"] = $_POST["VideoId"];
 $name = $DBhelper->Mode("select")
     ->Attribut("Name")
     ->fromTabelle("Medien")

@@ -5,7 +5,7 @@
  * Date: 19.03.2018
  * Time: 19:47
  */
-
+session_start();
 include_once ("DBConnection.php");
 $DBhelper = new DBConnection();
 
@@ -49,10 +49,11 @@ if ($uploadOk == 0) {
             ->InsertValues("'".$titel."'")
             ->InsertValues("'".basename($_FILES["fileToUpload"]["name"])."'")
             ->InsertValues("'".$beschreibung."'")
-            ->InsertValues("1")
+            ->InsertValues($_SESSION["UserId"])
             ->SQLExe();
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
+header('Location: http://localhost:63342/Projekt/Websites/Index.php'); exit;
 ?>

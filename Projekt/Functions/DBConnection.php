@@ -54,6 +54,9 @@ class DBConnection{
 //-----------------------------------------------------------//
 
     public function Mode($Mode){
+        unset($this->SQLStatement);
+        unset($this->InsertAttributList);
+        unset($this->InsertValuesList);
         if($Mode == "select"|$Mode == "Select"){
             $this->SQLStatement["Mode"] = "select ";
             return $this;
@@ -97,6 +100,7 @@ class DBConnection{
 
     public function UpdateStatement(){
         $Statement = " " . implode(" , ", $this->UpdateList)." ";
+        unset($this->UpdateList);
         return $Statement;
     }
 
@@ -144,6 +148,7 @@ class DBConnection{
     public function WhereStatement(){
         if ($this->UseWhere == true) {
             $Statement = $this->WhereCeck() . " " . implode(" and ", $this->WhereList);
+            unset($this->WhereList);
             return $Statement;
         }else{
             return " ";
@@ -199,6 +204,7 @@ class DBConnection{
                 .";";
         }
         $result = $conn->query($sql);
+        $sql = "";
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 return $row[$this->SQLStatement["Attribut"]];

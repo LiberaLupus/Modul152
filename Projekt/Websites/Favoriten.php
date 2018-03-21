@@ -5,6 +5,7 @@
  * Date: 19.03.2018
  * Time: 19:08
  */
+session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,12 +16,12 @@
   </head>
     <body>
         <?php
+            include_once ("../Coode/Navbar.php");
             include_once("../Functions/DBConnection.php");
             $DBhelper = new DBConnection();
             $Favoriten = true;
+            $Seite = "Favoriten.php";
             include __DIR__."/../Functions/VideoListPrinter.php"
-
-
         ?>
 </body>
 </html>
