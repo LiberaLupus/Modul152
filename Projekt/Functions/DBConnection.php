@@ -157,8 +157,22 @@ class DBConnection{
 
 //-------------------------Count-----------------------------//
 
-    public function AttributCount(){
-
+    public function Count($Statement, $Attribut){
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = $Statement;
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                return $row[$Attribut];
+            }
+        } else {
+            return "";
+        }
+        $conn->close();
+        return "";
     }
 
 //------------------------SQLExe-----------------------------//

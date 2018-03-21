@@ -8,7 +8,14 @@
 $Id = 1;
 //error_reporting(0);
 $PX = 100;
-while (true){
+if($Favoriten == false){
+    $Videos = $DBhelper->Count("select count(Id) as IdC from Medien","IdC");
+}else{
+    $Videos = $DBhelper->Count("select count(MedienFk) as IdC from Favoriten WHERE UserFk =".$_SESSION["UserId"],"IdC");
+}
+
+
+while ($Videos != 0){
     if($Favoriten == false){
         $Name = $DBhelper->Mode("select")->Attribut("Name")->fromTabelle("Medien")->Where("Id = ".$Id)->SQLExe();
         $VideoName = $DBhelper->Mode("select")->Attribut("Video")->fromTabelle("Medien")->Where("Id = ".$Id)->SQLExe();
@@ -45,9 +52,9 @@ while (true){
             ->SqlExe();
         if($_SESSION["UserId"] > 0){
             if ($Id != $TestId){
-                echo'<input type="submit" value=" Zu Favoriten hinzufügen" name = "Add">';
+                echo'<input type="submit" value=" Zu Favoriten hinzufügen" name = "Add'.$Id.'">';
             }else{
-                echo'<input type="submit" value="Von Favoriten entfernen" name = "Remove">';
+                echo'<input type="submit" value="Von Favoriten entfernen" name = "Remove'.$Id.'">';
             }
         }
         echo '<br />';
@@ -57,7 +64,7 @@ while (true){
         echo '            </div><!-- /.controls -->
                      </div><!-- /#login-box -->
         </div><!-- /.container -->';
-        if (isset($_POST["Add"])){
+        if (isset($_POST["Add".$Id])){
             $DBhelper->Mode("insert")
                 ->fromTabelle("Favoriten")
                 ->InsertAttribut("UserFk")
@@ -71,7 +78,7 @@ while (true){
                 header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
             }
         }
-        if (isset($_POST["Remove"])){
+        if (isset($_POST["Remove".$Id])){
             $DBhelper->Mode("delete")
                 ->fromTabelle("Favoriten")
                 ->Where("UserFk =".$_SESSION["UserId"])
@@ -83,11 +90,13 @@ while (true){
                 header('Location: http://localhost:63342/Projekt/Websites/Favoriten.php'); exit;
             }
         }
+        if($XP < 100){
+            $PX = 550;
+        }
+        --$Videos;
     }else{
-        break;
+
     }
     ++$Id;
-    if($XP < 100){
-        $PX = 550;
-    }
+
 }
